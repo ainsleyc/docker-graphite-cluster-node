@@ -34,15 +34,15 @@ ADD conf/logrotate /etc/logrotate.d/graphite
 RUN chmod 644 /etc/logrotate.d/graphite
 
 # # daemons
-# ADD daemons/carbon.sh /etc/service/carbon/run
-# ADD daemons/graphite.sh /etc/service/graphite/run
-# ADD daemons/nginx.sh /etc/service/nginx/run
+ADD daemons/carbon.sh /etc/service/carbon/run
+ADD daemons/graphite.sh /etc/service/graphite/run
+ADD daemons/nginx.sh /etc/service/nginx/run
 
 # # cleanup
-# RUN apt-get clean\
-#  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean\
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # # defaults
-# VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
-# ENV HOME /root
-# CMD ["/sbin/my_init"]
+VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
+ENV HOME /root
+CMD ["/sbin/my_init"]
