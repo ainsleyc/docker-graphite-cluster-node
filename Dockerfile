@@ -19,19 +19,19 @@ WORKDIR /usr/local/src/carbon
 RUN python ./setup.py install
 
 # # config nginx
-# RUN rm /etc/nginx/sites-enabled/default
-# ADD conf/nginx/nginx.conf /etc/nginx/nginx.conf
-# ADD conf/nginx/graphite.conf /etc/nginx/sites-available/graphite.conf
-# RUN ln -s /etc/nginx/sites-available/graphite.conf /etc/nginx/sites-enabled/graphite.conf
+RUN rm /etc/nginx/sites-enabled/default
+ADD conf/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD conf/nginx/graphite.conf /etc/nginx/sites-available/graphite.conf
+RUN ln -s /etc/nginx/sites-available/graphite.conf /etc/nginx/sites-enabled/graphite.conf
 
 # # init django admin
-# ADD scripts/django_admin_init.exp /usr/local/bin/django_admin_init.exp
-# RUN /usr/local/bin/django_admin_init.exp
+ADD scripts/django_admin_init.exp /usr/local/bin/django_admin_init.exp
+RUN /usr/local/bin/django_admin_init.exp
 
 # # logging support
-# RUN mkdir -p /var/log/carbon /var/log/graphite /var/log/nginx
-# ADD conf/logrotate /etc/logrotate.d/graphite
-# RUN chmod 644 /etc/logrotate.d/graphite
+RUN mkdir -p /var/log/carbon /var/log/graphite /var/log/nginx
+ADD conf/logrotate /etc/logrotate.d/graphite
+RUN chmod 644 /etc/logrotate.d/graphite
 
 # # daemons
 # ADD daemons/carbon.sh /etc/service/carbon/run
