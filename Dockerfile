@@ -43,7 +43,6 @@ RUN apt-get clean\
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # defaults
-EXPOSE 80:80 2003:2003 2004:2004
 VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
 ENV HOME /root
 CMD ["/sbin/my_init"]
