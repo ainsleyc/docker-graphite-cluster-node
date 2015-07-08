@@ -5,7 +5,7 @@ MAINTAINER Ainsley Chong <ainsley.chong@gmail.com>
 RUN git clone -b 0.9.12 https://github.com/graphite-project/graphite-web.git /usr/local/src/graphite-web
 WORKDIR /usr/local/src/graphite-web
 RUN python ./setup.py install
-ADD scripts/local_settings.py /opt/graphite/webapp/graphite/local_settings.py
+ADD scripts/local_settings.py.mustache /opt/graphite/webapp/graphite/local_settings.py.mustache
 ADD conf/graphite/ /opt/graphite/conf/
 
 # install whisper
@@ -47,5 +47,6 @@ RUN apt-get clean\
 
 # # defaults
 VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
+EXPOSE 80 2003 2004
 ENV HOME /root
 CMD ["/sbin/build_configs"]
