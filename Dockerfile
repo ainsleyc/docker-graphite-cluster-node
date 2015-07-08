@@ -38,6 +38,9 @@ ADD daemons/carbon.sh /etc/service/carbon/run
 ADD daemons/graphite.sh /etc/service/graphite/run
 ADD daemons/nginx.sh /etc/service/nginx/run
 
+# scripts
+ADD scripts/build_configs /sbin/build_configs
+
 # # cleanup
 RUN apt-get clean\
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -45,4 +48,4 @@ RUN apt-get clean\
 # # defaults
 VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
 ENV HOME /root
-CMD ["/sbin/my_init"]
+CMD ["/sbin/build_configs"]
