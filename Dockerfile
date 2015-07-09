@@ -47,6 +47,5 @@ RUN apt-get clean\
 
 # # defaults
 VOLUME ["/opt/graphite", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
-EXPOSE 80 2003 2004
 ENV HOME /root
 CMD ["/sbin/build_configs"]

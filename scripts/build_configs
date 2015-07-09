@@ -1,9 +1,26 @@
 #!/usr/bin/python -u
 import os, json, pystache
 
-carbon_config = {}
+carbon_config = {
+  "cache_count": 1
+}
 
 carbon_config_json = json.loads(os.getenv('CARBON_CONFIG', '{}'))
+if 'cache_count' in carbon_config_json:
+  carbon_config["cache_count"] = carbon_config_json["cache_count"]
+
+cache_configs = []
+carbonlink_hosts = []
+for x in range(0, carbon_config["cache_count"]):
+  cache_configs.append({
+    "label": "[cache:" + str(x) + "]",
+    "LINE_RECEIVER_PORT": 2013 + (x*10),
+    "PICKLE_RECEIVER_PORT": 2014 + (x*10),
+    "CACHE_QUERY_PORT": 7012 + (x*10)
+  })
+  carbonlink_hosts.append("'127.0.0.1:" + str(7012 + (x*10)) + ":" + str(x) + "'")
+carbon_config['cache_configs'] = cache_configs
+carbon_config['carbonlink_hosts'] = "[" + ", ".join(carbonlink_hosts) + "]"
 
 with open ("/opt/graphite/conf/carbon.conf.mustache", "r") as carbon_config_template:
   with open ("/opt/graphite/conf/carbon.conf", "w") as carbon_config_out:

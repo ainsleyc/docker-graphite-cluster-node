@@ -68,7 +68,7 @@ MAX_UPDATES_PER_SECOND = 500
 MAX_CREATES_PER_MINUTE = 50
 
 LINE_RECEIVER_INTERFACE = 0.0.0.0
-LINE_RECEIVER_PORT = 2003
+# LINE_RECEIVER_PORT = 2003
 
 # Set this to True to enable the UDP listener. By default this is off
 # because it is very common to run multiple carbon daemons and managing
@@ -78,7 +78,7 @@ UDP_RECEIVER_INTERFACE = 0.0.0.0
 UDP_RECEIVER_PORT = 2003
 
 PICKLE_RECEIVER_INTERFACE = 0.0.0.0
-PICKLE_RECEIVER_PORT = 2004
+# PICKLE_RECEIVER_PORT = 2004
 
 # Set to false to disable logging of successful connections
 LOG_LISTENER_CONNECTIONS = True
@@ -89,7 +89,7 @@ LOG_LISTENER_CONNECTIONS = True
 USE_INSECURE_UNPICKLER = False
 
 CACHE_QUERY_INTERFACE = 0.0.0.0
-CACHE_QUERY_PORT = 7002
+# CACHE_QUERY_PORT = 7002
 
 # Set this to False to drop datapoints received after the cache
 # reaches MAX_CACHE_SIZE. If this is True (the default) then sockets
@@ -211,7 +211,13 @@ WHISPER_FALLOCATE_CREATE = True
 # from [carbon] section.
 # You can then specify the --instance=b option to manage this instance
 
+{{ #cache_configs }}
+{{ label }}
+LINE_RECEIVER_PORT = {{ LINE_RECEIVER_PORT }}
+PICKLE_RECEIVER_PORT = {{ PICKLE_RECEIVER_PORT }}
+CACHE_QUERY_PORT = {{ CACHE_QUERY_PORT }}
 
+{{ /cache_configs }}
 
 [relay]
 LINE_RECEIVER_INTERFACE = 0.0.0.0
