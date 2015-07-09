@@ -34,7 +34,7 @@ ADD conf/logrotate /etc/logrotate.d/graphite
 RUN chmod 644 /etc/logrotate.d/graphite
 
 # # daemons
-ADD daemons/carbon.sh /etc/service/carbon/run
+ADD daemons/carbon.sh.mustache /etc/service/carbon/run.mustache
 ADD daemons/graphite.sh /etc/service/graphite/run
 ADD daemons/nginx.sh /etc/service/nginx/run
 

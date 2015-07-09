@@ -1,5 +1,5 @@
 #!/usr/bin/python -u
-import os, json, pystache
+import os, stat, json, pystache
 
 carbon_config = {
   "cache_count": 1
@@ -31,5 +31,18 @@ with open ("/opt/graphite/webapp/graphite/local_settings.py.mustache", "r") as l
   with open ("/opt/graphite/webapp/graphite/local_settings.py", "w") as local_settings_out:
     data = local_settings_template.read()
     local_settings_out.write(pystache.render(data, carbon_config))
+
+with open ("/etc/service/carbon/run.mustache", "r") as carbon_daemon_template:
+  data = carbon_daemon_template.read()
+  for x in range(0, carbon_config["cache_count"]):
+    dir_path = "/etc/service/carbon" + str(x)
+    run_path = dir_path + "/run"
+    os.makedirs(dir_path)
+    with open (run_path, "w") as carbon_daemon_out:
+      carbon_daemon_out.write(pystache.render(data, { "instance": x }))
+      os.chmod(run_path, stat.S_IEXEC | stat.S_IWRITE | stat.S_IREAD)
+
+os.remove("/etc/service/carbon/run.mustache")
+os.rmdir("/etc/service/carbon")
 
 execfile('/sbin/my_init')
