@@ -22,6 +22,9 @@ for x in range(0, carbon_config["cache_count"]):
 carbon_config['cache_configs'] = cache_configs
 carbon_config['carbonlink_hosts'] = "[" + ", ".join(carbonlink_hosts) + "]"
 
+print "CARBON_CONFIG:"
+print json.dumps(carbon_config, sort_keys=True, indent=2, separators=(',', ':'))
+
 with open ("/opt/graphite/conf/carbon.conf.mustache", "r") as carbon_config_template:
   with open ("/opt/graphite/conf/carbon.conf", "w") as carbon_config_out:
     data = carbon_config_template.read()
